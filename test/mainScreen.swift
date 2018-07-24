@@ -235,13 +235,13 @@ class mainScreen: UIViewController,UICollectionViewDelegate,UICollectionViewData
             case 0:
                 print("NICE")
             case 1:
-                print("NICE2")
+                performSegue(withIdentifier: "userLogin", sender: nil)
             case 2:
                 performSegue(withIdentifier: "FromMainToBreg", sender: nil)
             case 3:
                 print("NICE4")
             case 4:
-                print("NICE5")
+                performSegue(withIdentifier: "privacyAndTerms", sender: nil)
             default:
                 print("HTW")
             }

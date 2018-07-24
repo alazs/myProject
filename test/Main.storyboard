@@ -101,18 +101,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="color" red="0.33102765140000001" green="0.6064153404" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Riv-CJ-aSR">
-                                <rect key="frame" x="0.0" y="64" width="194" height="250"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="250" id="8px-NS-yR7"/>
-                                    <constraint firstAttribute="width" constant="194" id="Z5P-cj-cfz"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="dataSource" destination="a8P-9O-Nrm" id="tS2-Oz-j5e"/>
-                                    <outlet property="delegate" destination="a8P-9O-Nrm" id="DeB-Jx-8Gi"/>
-                                </connections>
-                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4A-UD-e2Z">
                                 <rect key="frame" x="12" y="243" width="51" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -157,6 +145,18 @@
                                     <outlet property="delegate" destination="a8P-9O-Nrm" id="qZd-CT-LXM"/>
                                 </connections>
                             </collectionView>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Riv-CJ-aSR">
+                                <rect key="frame" x="0.0" y="64" width="194" height="250"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="8px-NS-yR7"/>
+                                    <constraint firstAttribute="width" constant="194" id="Z5P-cj-cfz"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="a8P-9O-Nrm" id="tS2-Oz-j5e"/>
+                                    <outlet property="delegate" destination="a8P-9O-Nrm" id="DeB-Jx-8Gi"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -211,6 +211,8 @@
                         <outlet property="menuTableView" destination="Riv-CJ-aSR" id="n8H-R0-qiI"/>
                         <outlet property="subCatCollectionV" destination="ILe-mj-nSB" id="5CH-oZ-ugZ"/>
                         <segue destination="6y2-2b-h8R" kind="show" identifier="FromMainToBreg" id="vyK-KJ-rCy"/>
+                        <segue destination="Pgx-C8-KXI" kind="show" identifier="userLogin" id="mes-P3-M5O"/>
+                        <segue destination="xvU-D2-BSk" kind="show" identifier="privacyAndTerms" id="zw2-oV-Ekv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JAe-ow-DEN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -415,7 +417,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="דואר אלקטרוני" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="lR1-C8-CLK">
-                                <rect key="frame" x="20" y="99" width="374" height="40"/>
+                                <rect key="frame" x="20" y="143" width="374" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="pN4-8i-jE9"/>
                                 </constraints>
@@ -424,7 +426,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="סיסמה" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Btt-J7-2fZ">
-                                <rect key="frame" x="20" y="164" width="374" height="40"/>
+                                <rect key="frame" x="20" y="208" width="374" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="2G1-xN-bjI"/>
                                 </constraints>
@@ -433,13 +435,13 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="אזור התחברות משתמש" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yya-xS-uPX">
-                                <rect key="frame" x="128" y="38" width="158" height="21"/>
+                                <rect key="frame" x="128" y="82" width="158" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.33102765137264389" green="0.60641534038005696" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ysy-RN-qHg">
-                                <rect key="frame" x="162.33333333333334" y="264" width="90" height="38"/>
+                                <rect key="frame" x="162.33333333333334" y="308" width="90" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="qfZ-ud-9t6"/>
                                 </constraints>
@@ -472,7 +474,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RO2-bJ-alJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1713.0434782608697" y="-1442.9347826086957"/>
+            <point key="canvasLocation" x="-2752" y="159"/>
         </scene>
         <!--terms and conditions of use-->
         <scene sceneID="WLU-1e-7Au">
@@ -483,7 +485,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IaF-9h-3Gl">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -505,7 +507,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xA6-Hq-wCc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1970" y="-349"/>
+            <point key="canvasLocation" x="-2080" y="-837"/>
         </scene>
         <!--Bc About Class-->
         <scene sceneID="jo0-rs-u1r">
@@ -2266,24 +2268,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V5z-uW-A0j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1723.125" y="448.75"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="fsW-7k-7U7">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2p1-TJ-J6Z" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="x7S-Kd-uob">
-                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="J06-43-Svz" kind="relationship" relationship="rootViewController" id="oin-xi-l8C"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9W7-yj-Jj9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2720.625" y="448.75"/>
         </scene>
     </scenes>
     <resources>
