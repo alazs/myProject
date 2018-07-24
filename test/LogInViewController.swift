@@ -12,6 +12,7 @@ import UIKit
 class LogInViewController: UIViewController {
     
   
+   
     
     //chek if the email valid class
     let isEmailValidClass = CheckValidEmail()

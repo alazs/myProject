@@ -213,6 +213,7 @@
                         <segue destination="6y2-2b-h8R" kind="show" identifier="FromMainToBreg" id="vyK-KJ-rCy"/>
                         <segue destination="Pgx-C8-KXI" kind="show" identifier="userLogin" id="mes-P3-M5O"/>
                         <segue destination="TGu-bK-5lK" kind="show" identifier="privacyAndTerms" id="ejs-4s-M1M"/>
+                        <segue destination="J06-43-Svz" kind="show" identifier="favo" id="Eh9-wj-Xky"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JAe-ow-DEN" userLabel="First Responder" sceneMemberID="firstResponder"/>

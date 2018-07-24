@@ -189,6 +189,8 @@ class mainScreen: UIViewController,UICollectionViewDelegate,UICollectionViewData
         
         //start animate the indecator
         lodingPostsIndicator.startAnimating()
+        
+        performSegue(withIdentifier: "favo", sender: nil)
     }
     
     //sub catagory
@@ -197,7 +199,7 @@ class mainScreen: UIViewController,UICollectionViewDelegate,UICollectionViewData
         
         //stop animiting the indecator
         lodingPostsIndicator.stopAnimating()
-     
+        
         
     }
     
