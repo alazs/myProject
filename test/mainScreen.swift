@@ -47,7 +47,7 @@ class mainScreen: UIViewController,UICollectionViewDelegate,UICollectionViewData
    //view did load
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+    self.hideKeyBoardWhenTabAround()
        
         self.MsGallryColaction.delegate = self
         

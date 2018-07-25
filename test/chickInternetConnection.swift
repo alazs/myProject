@@ -10,18 +10,28 @@ import Foundation
 import SystemConfiguration
 import UIKit
 
-class chickInternetConnection : UIView
+class chickInternetConnection
 {
+    var view = UIView()
     //toast
-    let myToast = UIView()
+    let toast = UIView()
     
     //toast leable
-    let toastleabale = UILabel()
+    let  toastLable = UILabel()
     
     //toast button
     let toastButton = UIButton()
     
+    init()
+    {
+        //empty constractor
+    }
     
+    init(myView:UIView)
+    {
+        self.view = myView
+    }
+  
     
     func isConnectedToNetwork() -> Bool {
         
@@ -49,10 +59,11 @@ class chickInternetConnection : UIView
     }
     
     
-   /*
+   
     //message about internet connection
     //show toast
-    func toast(_ myToast : String ,toast: UIView,toastButton : UIButton,toastLable : UILabel)
+    // func toast(_ myToast : String ,toast: UIView,toastButton : UIButton,toastLable : UILabel)
+    func toast(_ myToast : String )
     {
         
         //get the super view width
@@ -80,7 +91,7 @@ class chickInternetConnection : UIView
         
         //adding button
         toastButton.frame = CGRect(x: 10, y: 10, width: 70, height: 70)
-        toastButton.addTarget(self, action:#selector(buttonAction(_:),remove(toast: toast)) , for: .touchUpInside)
+        toastButton.addTarget(self, action:#selector(buttonAction) , for: .touchUpInside)
         //transfer the toast as paramter thrw the sender of the button
         toastButton.setTitle("✕", for: .normal)
         
@@ -97,10 +108,10 @@ class chickInternetConnection : UIView
     
     @objc func buttonAction(_ sender : UIButton!)
     {
-        
+     self.toast.removeFromSuperview()
     }
     
-    */
+    
    
     
 }

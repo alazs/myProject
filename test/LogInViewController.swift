@@ -22,14 +22,14 @@ class LogInViewController: UIViewController {
     @IBOutlet var passWord: UITextField!
     
     //chking for internet connection
-    let internetConnection = chickInternetConnection()
+    
     
     let favoSave = favoritesCoreData()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-      //hide keyBoard
+       
+        //hide keyBoard
         self.hideKeyBoardWhenTabAround()
         
      //defin the keyboard type of email input
@@ -47,6 +47,13 @@ class LogInViewController: UIViewController {
    // button that login
     
     @IBAction func btnLogin(_ sender: UIButton) {
+        
+       // toast("my test")
+        
+        //chking for internet connection
+        let internetConnection = chickInternetConnection(myView: self.view)
+        internetConnection.buttonAction(sender)
+        
         //get the user name
         let userName = self.userName.text
         //get password
@@ -77,6 +84,7 @@ class LogInViewController: UIViewController {
                 //cheik if there is internet or not
                 if internetConnection.isConnectedToNetwork()
                 {
+                   
                     //TODO :
                     //if the userName or the passWord not match show message
                     print("connected")
@@ -86,6 +94,9 @@ class LogInViewController: UIViewController {
                 }
                 else
                 {
+                    // show the user message there is no internet
+                    internetConnection.toast("there is no internet")
+                    
                     print("disConnected")
                 }
             
@@ -112,6 +123,72 @@ class LogInViewController: UIViewController {
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    
+    
+    
+    ////////////
+    
+    //toast
+    let toast = UIView()
+    
+    //toast leable
+    let  toastLable = UILabel()
+    
+    //toast button
+    let toastButton = UIButton()
+    
+    
+    
+    func toast(_ myToast : String )
+    {
+        
+        //get the super view width
+        let superViewWidth = self.view.frame.width
+        
+        
+        toast.frame = CGRect(x: 2, y: 64, width:superViewWidth - 5 , height: 450)
+        
+        toast.backgroundColor = UIColor.lightGray
+        
+        //make rounded corners to the view
+        toast.layer.cornerRadius = 25
+        
+        //adding leable
+        let stringLength = myToast.count
+        
+        toastLable.frame = CGRect(x: 50, y: 150 , width: stringLength * 10 + 5, height: 50)
+        
+        toastLable.textAlignment = .center
+        
+        toastLable.text = myToast
+        
+        toastLable.clipsToBounds = true
+        toast.addSubview(toastLable)
+        
+        //adding button
+        toastButton.frame = CGRect(x: 10, y: 10, width: 70, height: 70)
+        toastButton.addTarget(self, action:#selector(buttonAction) , for: .touchUpInside)
+        //transfer the toast as paramter thrw the sender of the button
+        toastButton.setTitle("✕", for: .normal)
+        
+        toast.addSubview(toastButton)
+        
+        //adding UIview as subView
+        self.view.addSubview(toast)
+        
+        
+        
+    }
+    
+    
+    
+    @objc func buttonAction(_ sender : UIButton!)
+    {
+        self.toast.removeFromSuperview()
+    }
+    
+    
     
     
     
