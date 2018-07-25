@@ -9,10 +9,10 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Photos
 
 
-
-class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate,UITextFieldDelegate{
+class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate{
     
     
     @IBOutlet weak var BusinessName: UITextField!
@@ -42,7 +42,6 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
     
     var categorytype1 = ["x1","x2","x3","x4","x5","x6","x7","x8"]
     var categorytype2 = ["y1","y2","y3","y4","y5"]
-    var categorytype3 = ["z1","z2","z3","z4","z5","z6"]
     
     var hoursArray = [String]()
     var hoursArrayData = Array(repeating: "00:00", count: 14)//*************Change this depinding on the clocks startup time
@@ -80,9 +79,9 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
     @IBOutlet weak var loadLogoBtnOutlet: UIButton!
     @IBOutlet weak var loadBGBtnOutlet: UIButton!
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
             if imageChose == 1 {
                 imageLogoView.contentMode = .scaleAspectFit
                 imageLogoView.image = pickedImage
@@ -96,6 +95,13 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
         dismiss(animated: true, completion: nil)
     }
     
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController)
+    {
+        
+    }
+    
+    
+    
     /*func imagePickerControllerDidCancel(picker: UIImagePickerController) {
      dismissViewControllerAnimated(true, completion: nil)
      }*/
@@ -104,14 +110,12 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
     //height of the days stackview =420
     @IBOutlet weak var daysStackViewHeight: NSLayoutConstraint!
     var daysStackViewCurrentHeight = 420
-    @IBOutlet weak var CategoriesStackView: UIStackView!
     
     @IBOutlet weak var allDaySwitch: UISwitch!
     @IBOutlet weak var allDayLabel: UILabel!
     
     @IBOutlet weak var daysSwitchStack: UIStackView!//switch stack for each seperate day
     @IBOutlet weak var daysSwitchStackHeight: NSLayoutConstraint!// = 50
-    @IBOutlet weak var stackViewHeight: NSLayoutConstraint! //170 this is the 2 categories stack view
     
     @IBOutlet var UiPickerViewCollection: [UIPickerView]!
     var firstTimeForPicker = 1 // this var is used for one thing only -> to set pickerview switches to 7:00 at the launch of the app
@@ -149,11 +153,10 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
     @IBOutlet weak var agreementBtn: UIButton!
     @IBAction func agreementBtn(_ sender: Any) {
         
-        print(hoursArrayData)
-        
         if acceptedAgreement == 0{
             setBtnImage(view: agreementBtn, image: #imageLiteral(resourceName: "CheckCircleChecked"))
             acceptedAgreement = 1
+            print("NICEEE")
         }else {
             setBtnImage(view: agreementBtn, image: #imageLiteral(resourceName: "CheckCircleUnchecked"))
             acceptedAgreement = 0
@@ -178,9 +181,6 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //hide key board when click around
-        self.hideKeyBoardWhenTabAround()
-        
         mapTest()
         tblView1.isHidden = true
         tblView2.isHidden = true
@@ -191,11 +191,10 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
         //        imageLogoView.isHidden = true
         //        imageBGView.isHidden = true
         
-        stackViewHeight.constant = 0
-        
         daysSwitchStackHeight.constant = 0
         
         imagePicker.delegate = self
+        
         
         for i in (0...23){//it fills hoursArray
             if i < 10 {
@@ -218,7 +217,6 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
     
     override func viewDidAppear(_ animated: Bool) {
         BregScrollView.contentSize = CGSize(width: 0, height: 1367)
-        print("this print from viewDidAppear \(scrollHeight)")
     }
     var scrollHeight = 1367
     var tables = 0// this decides the height of the tableview's height (the height of the stack view they are in)
@@ -228,15 +226,37 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
         BregSecondaryView.frame.size.height += much
     }
     
+    func checkPermission() {
+        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+        switch photoAuthorizationStatus {
+        case .authorized:
+            print("Access is granted by user")
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization({
+                (newStatus) in
+                print("status is \(newStatus)")
+                if newStatus ==  PHAuthorizationStatus.authorized {
+                    /* do stuff here */
+                    print("success")
+                }
+            })
+            print("It is not determined until now")
+        case .restricted:
+            // same same
+            print("User do not have access to photo album.")
+        case .denied:
+            // same same
+            print("User has denied the permission.")
+        }
+    }
+    
     func ChangeScrollViewHieght (H: Int)
     {
-        if stackViewHeight.constant == 0 { tables = 0} else { tables = 170 }
         scrollHeight += H
         //UIScrollView.transition(with: BregScrollView, duration: 0.5, options: .transitionCrossDissolve, animations: {
         BregScrollView.contentSize = CGSize(width: 0, height: scrollHeight + tables)
         //})
         
-        print("H is \(H)  and scroll is \(scrollHeight)")
     }
     
     //chek if the category table is hidden or not
@@ -245,14 +265,9 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
         if tblView1.isHidden {
             setView(view: tblView1, hidden: false)
             setView(view: tblView2, hidden: true)
-            stackViewHeight.constant = 170
-            //CategoriesStackView.isHidden = false
         } else {
             setView(view: tblView1, hidden: true)
-            stackViewHeight.constant = 0
-            //CategoriesStackView.isHidden = true
         }
-        if stackViewHeight.constant == 0 { tables = 0} else { tables = 170 }
         ChangeScrollViewHieght(H: 0)//0 is just for refresh
     }
     
@@ -261,14 +276,9 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
         if tblView2.isHidden {
             setView(view: tblView2, hidden: false)
             setView(view: tblView1, hidden: true)
-            stackViewHeight.constant = 170
-            //CategoriesStackView.isHidden = false
         } else {
             setView(view: tblView2, hidden: true)
-            stackViewHeight.constant = 0
-            //CategoriesStackView.isHidden = true
         }
-        if stackViewHeight.constant == 0 { tables = 0} else { tables = 170 }
         ChangeScrollViewHieght(H: 0)//0 is just for refresh
     }
     
@@ -289,7 +299,6 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
             ChangeScrollViewHieght(H: 50 + daysStackViewCurrentHeight)
         }
         //allDaySwitch.isOn = !allDaySwitch.isOn
-        print("switch tapped and printed: \(scrollHeight)")
     }
     /////try this later:
     //
@@ -333,7 +342,7 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
         let location = CLLocationCoordinate2D(latitude: 32.952047,longitude: 35.177933)
         
         // 3)
-        let span = MKCoordinateSpanMake(0.05, 0.05)
+        let span = MKCoordinateSpan.init(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: location, span: span)
         map?.setRegion(region, animated: true)
         
@@ -357,20 +366,20 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
         businessLongitude = locationCoordinate.longitude
     }
     
-   /* let manager = CLLocationManager()
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-        let location = locations[0]
-        
-        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.01, 0.01)
-        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-        let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
-        map.setRegion(region, animated: true)
-        
-        print(location.altitude)
-        print(location.speed)
-        
-        self.map.showsUserLocation = true
-    }*/
+    /* let manager = CLLocationManager()
+     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+     let location = locations[0]
+     
+     let span:MKCoordinateSpan = MKCoordinateSpanMake(0.01, 0.01)
+     let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+     let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
+     map.setRegion(region, animated: true)
+     
+     print(location.altitude)
+     print(location.speed)
+     
+     self.map.showsUserLocation = true
+     }*/
     let CheckEmail = CheckValidEmail()
     
     
@@ -423,10 +432,10 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
             return
         }
         
-       /* if AboutBusiness.text == ""{
-            createAlert(title: "What about the business?", message: "Please provide more info about the business")
-            return
-        }*/
+        /* if AboutBusiness.text == ""{
+         createAlert(title: "What about the business?", message: "Please provide more info about the business")
+         return
+         }*/
         
         if FullName.text == ""{
             createAlert(title: "Full Name Required", message: "Please provide your full name")
@@ -455,7 +464,7 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
         if acceptedAgreement == 0{
             createAlert(title: "License Agreement", message: "You should read and agree to our Terms and Conditions of Use")
         }
-    
+        
         
     }
     
@@ -483,7 +492,6 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
         }else{
             if subCategory == 1 {return categorytype1.count}
             if subCategory == 2 {return categorytype2.count}
-            if subCategory == 3 {return categorytype3.count}
             else{return 8}
             
         }
@@ -501,7 +509,6 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
             
             if subCategory == 1 {cell2.textLabel?.text = categorytype1[indexPath.row]}
             if subCategory == 2 {cell2.textLabel?.text = categorytype2[indexPath.row]}
-            if subCategory == 3 {cell2.textLabel?.text = categorytype3[indexPath.row]}
             
             return cell2
         }
@@ -522,21 +529,17 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
         if tableView == tblView2{
             if subCategory == 1 {btnDrop2.setTitle("\(categorytype1[indexPath.row])", for: .normal)}
             if subCategory == 2 {btnDrop2.setTitle("\(categorytype2[indexPath.row])", for: .normal)}
-            if subCategory == 3 {btnDrop2.setTitle("\(categorytype3[indexPath.row])", for: .normal)}
             setView(view: tblView2, hidden: true)
-            print("table view 2 print!@!@#!@#!@#")
         }
         tables = 0
         ChangeScrollViewHieght(H: 0)//just for refreshing Scroll height
-        stackViewHeight.constant = 0
         //CategoriesStackView.isHidden = true
         // refresh data of table 2
         self.tblView2.reloadData()
         self.refresher?.endRefreshing()
-        print(subCategory)
     }
     
-   
+    
     
     
 }
@@ -585,14 +588,12 @@ extension Bregister: UIPickerViewDataSource, UIPickerViewDelegate{
     
     
     //////////loction from map
-//        @IBAction func revealRegionDetailsWithLongPressOnMap(sender: UILongPressGestureRecognizer) {
-//            if sender.state != UIGestureRecognizerState.began { return }
-//            let touchLocation = sender.location(in: map)
-//            let locationCoordinate = map.convert(touchLocation, toCoordinateFrom: map)
-//            print("Tapped at lat: \(locationCoordinate.latitude) long: \(locationCoordinate.longitude)")
-//        }
+    //        @IBAction func revealRegionDetailsWithLongPressOnMap(sender: UILongPressGestureRecognizer) {
+    //            if sender.state != UIGestureRecognizerState.began { return }
+    //            let touchLocation = sender.location(in: map)
+    //            let locationCoordinate = map.convert(touchLocation, toCoordinateFrom: map)
+    //            print("Tapped at lat: \(locationCoordinate.latitude) long: \(locationCoordinate.longitude)")
+    //        }
     
     
 }
-
-
