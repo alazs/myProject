@@ -47,11 +47,9 @@ class mainScreen: UIViewController,UICollectionViewDelegate,UICollectionViewData
    //view did load
     override func viewDidLoad() {
         super.viewDidLoad()
-    
        
+        hideMenuWhenTabAround()
         self.MsGallryColaction.delegate = self
-        
-        
         
        //get the the photos name from the plist
         if let path = Bundle.main.path(forResource: "imageArray", ofType: "plist"){
@@ -60,8 +58,27 @@ class mainScreen: UIViewController,UICollectionViewDelegate,UICollectionViewData
         }
     }
     
-   
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch: UITouch? = touches.first
+        if touch?.view != menuTableView {
+            menuTableView.isHidden = true
+        }
+    }
     
+    func hideMenuWhenTabAround()
+    {
+        //action = waht hppen when click out side the key board
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideMenuIfShown))
+        
+        tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func hideMenuIfShown()
+    {
+        if !menuTableView.isHidden {menuTableView.isHidden = true}
+    }
   
     
     
@@ -202,7 +219,7 @@ class mainScreen: UIViewController,UICollectionViewDelegate,UICollectionViewData
         
         
     }
-    
+    //Menu Button
     @IBAction func MenuBtn(_ sender: Any) {
         menuTableView.isHidden = !menuTableView.isHidden
     }
