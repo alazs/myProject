@@ -41,6 +41,7 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
     var categoryNames = ["item 1","Item 2","Item 3","Item 4","Item 5","Item 6","Item 7"]
     
     var categorytype1 = ["x1","x2","x3","x4","x5","x6","x7","x8"]
+    
     var categorytype2 = ["y1","y2","y3","y4","y5"]
     
     var hoursArray = [String]()
