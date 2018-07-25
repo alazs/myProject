@@ -38,13 +38,13 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
     //catagory names
     var subCategory = 0
     
-    var categoryNames = ["item 1","Item 2","Item 3","Item 4","Item 5","Item 6","Item 7"]
+    var categoryNames = ["עסקים",""]
     
     var categorytype1 = ["x1","x2","x3","x4","x5","x6","x7","x8"]
     var categorytype2 = ["y1","y2","y3","y4","y5"]
     
     var hoursArray = [String]()
-    var hoursArrayData = Array(repeating: "00:00", count: 14)//*************Change this depinding on the clocks startup time
+    var hoursArrayData = Array(repeating: "00:00", count: 14)//*************Change this depending on the clocks startup time
     
     
     //UI refresh controll
