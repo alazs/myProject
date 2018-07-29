@@ -62,6 +62,8 @@ class ViewController: UIViewController {
             
         //call button
         case BcCall:
+    
+             makeCall(123456789)
             container.segueIdentifierReceivedFromParent("scond")
             print("btn2")
             
@@ -99,6 +101,20 @@ class ViewController: UIViewController {
         
     }
     
+    //macke a phoneCall
+    private func makeCall(_ number : Int?)
+    {
+        if let url = URL(string: "tel://\(number!)")
+        {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        
+        else
+        {
+            return
+        }
+       
+    }
     
     
 }
