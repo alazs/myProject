@@ -38,7 +38,7 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
     //catagory names
     var subCategory = 0
     
-    var categoryNames = ["עסקים",""]
+    var categoryNames = ["עסקים","פנאי ונופש"]
     
     var categorytype1 = ["x1","x2","x3","x4","x5","x6","x7","x8"]
     
