@@ -63,7 +63,7 @@ class ViewController: UIViewController {
         //call button
         case BcCall:
     
-             makeCall(123456789)
+             makeCall(054123456789)
             container.segueIdentifierReceivedFromParent("scond")
             print("btn2")
             
