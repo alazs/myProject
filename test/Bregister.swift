@@ -38,11 +38,16 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
     //catagory names
     var subCategory = 0
     
-    var categoryNames = ["עסקים","פנאי ונופש"]
+    var categoryNames = ["עסקים","פנאי ונופש","בעלי מקצוע","שירותי דרך"]
     
-    var categorytype1 = ["x1","x2","x3","x4","x5","x6","x7","x8"]
-    
-    var categorytype2 = ["y1","y2","y3","y4","y5"]
+    // -עסקים-
+    var categorytype1 = ["אוכל מהיר","אולמי אירועים","בתי קפה","גלריות לעיצוב הבית","דלתות","הכל לאישה","הכל לגבר","הלבשה והנעלה","חומרי בניין","חימום והסקה","חנויות מוצרי חשמל","חנויות ספרים","יבוא ושיווק","לעסק ולמשרד","מכבסות","מסעדות","מספרות","מעבדות סלולר","מעבדת מחשבים","מרפאות ויטרנריות","ניקוי שטיחים ווילונות","ספורט וטיולים","ציוד וכלי עבודה","ציוד חיות מחמד","ציוד למטבח","קונדיטוריות וגלידריות","קרמיקה וכלים סניטריים","רהיטים","ריהוט גן","שטיחים ווילונות","שיווק והפצה"]
+    //-פנאי ונופש-
+    var categorytype2 = ["גנים ציבוריים","מסלולי הליכה","סנוקר וברים","צימרים"]
+    //-בעלי מקצוע-
+    var categorytype3 = ["איטום","אינסטלטורים","אלומיניום","בנייה","גינון ופתוח","דודי שמש","הדברה","הובלות","חשמלאי","טכנאי מוצרי חשמל ביתיים","טכנאי קירור ומיזוג","מנעולן","מסגריות","מעצבי פנים וחוץ","נגריות ועבודות עץ","סוכני ביטוח","עורכי דין","שיפוצים","שירותי חשבונאות ומסים","שירותים כלכליים ופיננסים","תיווך נדלן"]
+    //-שירותי דרך-
+    var categorytype4 = ["גררים ונגררים","חלקי חילוף לרכב","חשמל רכב","מוסכים","מוסכניק נייד","פנצ'ריות"]
     
     var hoursArray = [String]()
     var hoursArrayData = Array(repeating: "00:00", count: 14)//*************Change this depending on the clocks startup time
@@ -493,6 +498,8 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
         }else{
             if subCategory == 1 {return categorytype1.count}
             if subCategory == 2 {return categorytype2.count}
+            if subCategory == 3 {return categorytype3.count}
+            if subCategory == 4 {return categorytype4.count}
             else{return 8}
             
         }
@@ -510,6 +517,8 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
             
             if subCategory == 1 {cell2.textLabel?.text = categorytype1[indexPath.row]}
             if subCategory == 2 {cell2.textLabel?.text = categorytype2[indexPath.row]}
+            if subCategory == 3 {cell2.textLabel?.text = categorytype3[indexPath.row]}
+            if subCategory == 4 {cell2.textLabel?.text = categorytype4[indexPath.row]}
             
             return cell2
         }
@@ -522,14 +531,14 @@ class Bregister: UIViewController,UITableViewDataSource,UITableViewDelegate, UII
             btnDrop1.setTitle("\(categoryNames[indexPath.row])", for: .normal)
             btnDrop2.setTitle("Select Type", for: .normal)
             if subCategory == 0 {btnDrop2.isHidden = false;}
-            if indexPath.row + 1 == 1 {subCategory = 1}
-            if indexPath.row + 1 == 2 {subCategory = 2}
-            if indexPath.row + 1 >= 3 {subCategory = 3}
+            subCategory = indexPath.row + 1
             setView(view: tblView1, hidden: true)
         }
         if tableView == tblView2{
             if subCategory == 1 {btnDrop2.setTitle("\(categorytype1[indexPath.row])", for: .normal)}
             if subCategory == 2 {btnDrop2.setTitle("\(categorytype2[indexPath.row])", for: .normal)}
+            if subCategory == 3 {btnDrop2.setTitle("\(categorytype3[indexPath.row])", for: .normal)}
+            if subCategory == 4 {btnDrop2.setTitle("\(categorytype4[indexPath.row])", for: .normal)}
             setView(view: tblView2, hidden: true)
         }
         tables = 0
